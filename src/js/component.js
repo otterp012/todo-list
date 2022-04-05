@@ -21,7 +21,7 @@ function column(className, title) {
 function add(addbtn) {
   addbtn.forEach((e) => {
     e.onclick = function () {
-      e.parentNode;
+      this.parentNode.append(`<div>new</div>`);
     };
   });
 }
@@ -29,9 +29,10 @@ function add(addbtn) {
 function remove(removebtn) {
   removebtn.forEach((e) => {
     e.onclick = function () {
-      this.parentNode.remove();
+      const parent = this.parentNode;
+      parent.parentNode.remove();
     };
   });
 }
 
-export { remove };
+export { remove, add, cards, column };
