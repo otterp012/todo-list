@@ -1,17 +1,82 @@
 @import 'button';
 
-.todo-content {
+.card-wrapper {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  width: 284px;
-  height: 100px;
+  width: 268px;
+  height: 76px;
   background-color: #fff;
   margin-top: 8px;
   border-radius: 5px;
-  padding: 8px;
+  padding: 16px;
+
+  .card-header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .card-text {
+    font-size: 14px;
+  }
+
+  .card-footer-text {
+    font-size: 12px;
+    color: #bdbdbd;
+  }
+}
+
+.new-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 266px;
+  height: 102px;
+  padding: 16px;
+  border-radius: 5px;
+  border: #0075de solid 1px;
+  background-color: #fff;
+  margin: 10px 0;
+  input {
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .card-tittle-input::placeholder {
+    font-size: 16px;
+    font-weight: 700;
+    color: #828282;
+  }
+
+  .card-text-input::placeholder {
+    font-size: 14px;
+    color: #828282;
+  }
 
   .card-btn-wrapper {
-    width: 20px;
+    display: flex;
+    justify-content: space-between;
+    button {
+      width: 125px;
+      height: 35px;
+      border-radius: 5px;
+    }
+
+    .card-cancel-btn {
+      background-color: #e0e0e0;
+    }
+
+    .card-add-btn {
+      background-color: #86c6ff;
+
+      &:hover {
+        background-color: #0075de;
+      }
+    }
   }
 }

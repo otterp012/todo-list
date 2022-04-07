@@ -45,8 +45,9 @@ button {
 }
 
 .card-remove-btn {
-  width: 20px;
-  height: 20px;
+  background-image: buttonIcon(remove);
+  width: 11px;
+  height: 11px;
   background-color: $mainBGColor;
 }
 
