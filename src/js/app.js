@@ -1,5 +1,9 @@
 const store = {
   focusedCard: null,
+  newInputCard: {
+    tittle: null,
+    text: null,
+  },
 };
 
 const setStateProperty = (property, state) => {
@@ -47,34 +51,97 @@ const cardWrapper = (array) => {
 </div>`;
 };
 const columnWrapperEl = document.querySelector('.column-wrapper');
-columnWrapperEl.addEventListener('click', (e) => {
-  if (e.target.className === 'column-add-btn') {
-    columnWrapperEl.innerHTML += newCardWrapper('focused');
-  }
-});
+// columnWrapperEl.addEventListener('click', (e) => {
+//   if (e.target.className === 'column-add-btn') {
+//     columnWrapperEl.innerHTML += newCardWrapper('focused');
+//   }
+// });
 
 // columnWrapperEl.addEventListener('click', (e) => {
 //   if (e.target.className === 'card-cancel-btn') {
 //     document.querySelector('#focused').remove();
 //   }
 // });
+// async function init() {
+//   const first = await one();
+//   first.then(() => two());
+// }
+function one() {
+  columnWrapperEl.addEventListener('click', (e) => {
+    if (e.target.className === 'column-add-btn') {
+      columnWrapperEl.innerHTML += newCardWrapper('focused');
+      return document.querySelector('#focused');
+    }
+  });
+}
 
-const cardWrapperEl = document.querySelector('.card-wrapper');
+// root()
+//   .then(($root) => document.body.append($root) || $root)
+//   .then(($root) => Promise.all([$root, div()]))
+//   .then(([r, d]) => r.append(d));
+// async function div() {
+//   const $div = document.createElement('div');
+//   $div.textContent = 'Hello World';
+//   $div.className = 'container';
+//   return $div;
+// }
+// async function root() {
+//   const $root = document.createElement('div');
+//   $root.id = 'root';
+//   return $root;
+// }
 
-cardWrapperEl.addEventListener('click', (e) => {
-  console.log(e.target);
-  if (e.target.className === 'card-add-btn') {
-    const focusedCard = document.querySelector('#focused');
-    const data = [...focusedCard.children]
-      .filter((v) => v.tagName === 'INPUT')
-      .map((v) => v.value);
-    columnWrapperEl.innerHTML += cardWrapper(data);
-  }
+document.body.addEventListener('click', () => console.log(one()));
+// const newta = one();
+// console.log(newta);
+// newFocus.addEventListener('click', (e) => {
+//   if (e.target.className === 'card-add-btn') {
+//     const focusedCard = document.querySelector('#focused');
+//     const data = [...focusedCard.children]
+//       .filter((v) => v.tagName === 'INPUT')
+//       .map((v) => v.value);
+//     columnWrapperEl.innerHTML += cardWrapper(data);
+//   }
 
-  if (e.target.className === 'card-cancel-btn') {
-    e.currentTarget.remove();
-  }
-});
+//   if (e.target.className === 'card-cancel-btn') {
+//     e.currentTarget.remove();
+//   }
+// });
+
+// function two() {
+//   const newCardWrapperEl = document.querySelector('.new-card-wrapper');
+
+//   if (newCardWrapperEl) {
+//     newCardWrapperEl.addEventListener('click', (e) => {
+//       if (e.target.className === 'card-add-btn') {
+//         const focusedCard = document.querySelector('#focused');
+//         const data = [...focusedCard.children]
+//           .filter((v) => v.tagName === 'INPUT')
+//           .map((v) => v.value);
+//         columnWrapperEl.innerHTML += cardWrapper(data);
+//       }
+
+//       if (e.target.className === 'card-cancel-btn') {
+//         e.currentTarget.remove();
+//       }
+//     });
+//   }
+// }
+// init();
+// cardWrapperEl.addEventListener('click', (e) => {
+//   console.log(e.target);
+//   if (e.target.className === 'card-add-btn') {
+//     const focusedCard = document.querySelector('#focused');
+//     const data = [...focusedCard.children]
+//       .filter((v) => v.tagName === 'INPUT')
+//       .map((v) => v.value);
+//     columnWrapperEl.innerHTML += cardWrapper(data);
+//   }
+
+//   if (e.target.className === 'card-cancel-btn') {
+//     e.currentTarget.remove();
+//   }
+// });
 
 // const deleteNode = (query) => document.querySelector(`${query}`).remove();
 
