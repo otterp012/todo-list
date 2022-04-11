@@ -1,23 +1,35 @@
 const store = {
   focusedCard: null,
   newInputCard: {
+    cardID: null,
     tittle: null,
     text: null,
   },
+  nextCardID: 1,
 };
+
+Object.defineProperty(store, 'newInputCard', {
+  get() {
+    return this._newInputCard;
+  },
+
+  set(obj) {
+    this._newInputCard = obj;
+    this.nextCardID = this._newInputCard.cardID + 1;
+    // 여기다가 db로 보내는 로직 작성하면 될 듯
+  },
+});
 
 const setStateProperty = (property, state) => {
   store[property] = state;
 };
 
+const getState = (property) => {
+  return store[property];
+};
+
 const cardRemoveBtnEl = document.querySelector('.card-remove-btn');
 const modalWrapperEl = document.querySelector('.modal-wrapper');
-
-// cardRemoveBtnEl.addEventListener('click', (e) => {
-//   modalWrapperEl.classList.add('active');
-//   console.log(e.currentTarget);
-//   e.currentTarget.setAttribute('focusedCard', true);
-// });
 
 const modalCancelBtnEl = document.querySelector('.modal-cancel-btn');
 modalCancelBtnEl.addEventListener('click', () => {
@@ -35,9 +47,8 @@ const newCardWrapper = (id) => {
 </div>`;
 };
 
-const cardWrapper = (array) => {
-  const [tittle, text] = array;
-  return `<div class="card-wrapper">
+const cardWrapper = ({ cardID, tittle, text }) => {
+  return `<div class="card-wrapper" id="${cardID}">
   <div class="card-header-wrapper">
     <h3 class="card-tittle">${tittle}</h3>
     <button class="card-remove-btn"></button>
@@ -50,100 +61,39 @@ const cardWrapper = (array) => {
   </div>
 </div>`;
 };
+
 const columnWrapperEl = document.querySelector('.column-wrapper');
-// columnWrapperEl.addEventListener('click', (e) => {
-//   if (e.target.className === 'column-add-btn') {
-//     columnWrapperEl.innerHTML += newCardWrapper('focused');
-//   }
-// });
+columnWrapperEl.addEventListener('click', (e) => {
+  if (e.target.className === 'column-add-btn') {
+    columnWrapperEl.innerHTML += newCardWrapper('focused');
+    document.querySelector('.column-add-btn').classList.add('active');
+  }
+});
 
-// columnWrapperEl.addEventListener('click', (e) => {
-//   if (e.target.className === 'card-cancel-btn') {
-//     document.querySelector('#focused').remove();
-//   }
-// });
-// async function init() {
-//   const first = await one();
-//   first.then(() => two());
-// }
-function one() {
-  columnWrapperEl.addEventListener('click', (e) => {
-    if (e.target.className === 'column-add-btn') {
-      columnWrapperEl.innerHTML += newCardWrapper('focused');
-      return document.querySelector('#focused');
-    }
-  });
-}
+columnWrapperEl.addEventListener('click', (e) => {
+  if (e.target.className === 'card-add-btn') {
+    const focusedCard = document.querySelector('#focused');
+    const data = [...focusedCard.children]
+      .filter((v) => v.tagName === 'INPUT')
+      .map((v) => v.value);
 
-// root()
-//   .then(($root) => document.body.append($root) || $root)
-//   .then(($root) => Promise.all([$root, div()]))
-//   .then(([r, d]) => r.append(d));
-// async function div() {
-//   const $div = document.createElement('div');
-//   $div.textContent = 'Hello World';
-//   $div.className = 'container';
-//   return $div;
-// }
-// async function root() {
-//   const $root = document.createElement('div');
-//   $root.id = 'root';
-//   return $root;
-// }
+    const cardInforObj = {
+      cardID: getState('nextCardID'),
+      tittle: null,
+      text: null,
+    };
+    [cardInforObj.tittle, cardInforObj.text] = data;
+    columnWrapperEl.innerHTML += cardWrapper(cardInforObj);
+    setStateProperty('newInputCard', cardInforObj);
+    deleteNode('#focused');
+    document.querySelector('.column-add-btn').classList.remove('active');
+  }
 
-document.body.addEventListener('click', () => console.log(one()));
-// const newta = one();
-// console.log(newta);
-// newFocus.addEventListener('click', (e) => {
-//   if (e.target.className === 'card-add-btn') {
-//     const focusedCard = document.querySelector('#focused');
-//     const data = [...focusedCard.children]
-//       .filter((v) => v.tagName === 'INPUT')
-//       .map((v) => v.value);
-//     columnWrapperEl.innerHTML += cardWrapper(data);
-//   }
-
-//   if (e.target.className === 'card-cancel-btn') {
-//     e.currentTarget.remove();
-//   }
-// });
-
-// function two() {
-//   const newCardWrapperEl = document.querySelector('.new-card-wrapper');
-
-//   if (newCardWrapperEl) {
-//     newCardWrapperEl.addEventListener('click', (e) => {
-//       if (e.target.className === 'card-add-btn') {
-//         const focusedCard = document.querySelector('#focused');
-//         const data = [...focusedCard.children]
-//           .filter((v) => v.tagName === 'INPUT')
-//           .map((v) => v.value);
-//         columnWrapperEl.innerHTML += cardWrapper(data);
-//       }
-
-//       if (e.target.className === 'card-cancel-btn') {
-//         e.currentTarget.remove();
-//       }
-//     });
-//   }
-// }
-// init();
-// cardWrapperEl.addEventListener('click', (e) => {
-//   console.log(e.target);
-//   if (e.target.className === 'card-add-btn') {
-//     const focusedCard = document.querySelector('#focused');
-//     const data = [...focusedCard.children]
-//       .filter((v) => v.tagName === 'INPUT')
-//       .map((v) => v.value);
-//     columnWrapperEl.innerHTML += cardWrapper(data);
-//   }
-
-//   if (e.target.className === 'card-cancel-btn') {
-//     e.currentTarget.remove();
-//   }
-// });
-
-// const deleteNode = (query) => document.querySelector(`${query}`).remove();
+  if (e.target.className === 'card-cancel-btn') {
+    document.querySelector('.column-add-btn').classList.remove('active');
+    deleteNode('#focused');
+  }
+});
 
 function deleteNode(query) {
   document.querySelector(`${query}`).remove();
