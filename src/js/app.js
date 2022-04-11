@@ -1,5 +1,6 @@
 import { newCardWrapper, cardWrapper } from './component/card';
 import { store, setStateProperty, getState } from './store/store';
+import { getTargetParentByClassName, deleteNode } from './utils/utils';
 const cardRemoveBtnEl = document.querySelector('.card-remove-btn');
 const modalWrapperEl = document.querySelector('.modal-wrapper');
 
@@ -17,14 +18,12 @@ modalRemoveBtnEl.addEventListener('click', () => {
 });
 
 const columnWrapperEl = document.querySelector('.column-wrapper');
+
 columnWrapperEl.addEventListener('click', (e) => {
   if (e.target.className === 'column-add-btn') {
     columnWrapperEl.innerHTML += newCardWrapper('focused');
     document.querySelector('.column-add-btn').classList.add('active');
   }
-});
-
-columnWrapperEl.addEventListener('click', (e) => {
   if (e.target.className === 'card-add-btn') {
     const focusedCard = document.querySelector('#focused');
     const data = [...focusedCard.children]
@@ -36,6 +35,7 @@ columnWrapperEl.addEventListener('click', (e) => {
       tittle: null,
       text: null,
     };
+
     [cardInforObj.tittle, cardInforObj.text] = data;
     columnWrapperEl.innerHTML += cardWrapper(cardInforObj);
     setStateProperty('newInputCard', cardInforObj);
@@ -54,17 +54,3 @@ columnWrapperEl.addEventListener('click', (e) => {
     modalWrapperEl.classList.add('active');
   }
 });
-const getTargetParentByClassName = (node, className) => {
-  if (node) {
-    let current = node;
-    while (current !== document.body) {
-      if (current.className === className) return current;
-      current = current.parentNode;
-    }
-    return false;
-  }
-};
-
-function deleteNode(query) {
-  document.querySelector(`${query}`).remove();
-}

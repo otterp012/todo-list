@@ -17,6 +17,7 @@ Object.defineProperty(store, 'newInputCard', {
     this._newInputCard = obj;
     this.nextCardID = this._newInputCard.cardID + 1;
     // 여기다가 db로 보내는 로직 작성하면 될 듯
+    // 우측 배너창에 추가되는 데이터 여기서 삽입하면 될 듯
   },
 });
 
