@@ -1,7 +1,7 @@
-const newCardWrapper = (id) => {
-  return `<div class="new-card-wrapper" id="${id}">
-    <input type="text" class="card-tittle-input" placeholder="제목을 입력하세요">
-    <input type="text" class="card-text-input" placeholder="내용을 입력하세요">
+const newCardWrapper = ({ id = '', tittle = '', text = '' }) => {
+  return `<div class="new-card-wrapper" id=${id}>
+    <input type="text" class="card-tittle-input" placeholder="제목을 입력하세요" value=${tittle}>
+    <input type="text" class="card-text-input" placeholder="내용을 입력하세요" value=${text}>
     <div class="card-btn-wrapper">
       <button class="card-cancel-btn">취소</button>
       <button class="card-add-btn">등록</button>
