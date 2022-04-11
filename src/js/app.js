@@ -1,11 +1,11 @@
 const store = {
-  focusedCard: null,
+  focusedCardID: null,
   newInputCard: {
     cardID: null,
     tittle: null,
     text: null,
   },
-  nextCardID: 1,
+  nextCardID: 'A',
 };
 
 Object.defineProperty(store, 'newInputCard', {
@@ -34,6 +34,14 @@ const modalWrapperEl = document.querySelector('.modal-wrapper');
 const modalCancelBtnEl = document.querySelector('.modal-cancel-btn');
 modalCancelBtnEl.addEventListener('click', () => {
   modalWrapperEl.classList.remove('active');
+});
+
+const modalRemoveBtnEl = document.querySelector('.modal-remove-btn');
+modalRemoveBtnEl.addEventListener('click', () => {
+  const removedCardId = getState('focusedCardID');
+  document.querySelector(`#${removedCardId}`).remove();
+  modalWrapperEl.classList.remove('active');
+  setStateProperty('focusedCardID', null);
 });
 
 const newCardWrapper = (id) => {
@@ -93,7 +101,23 @@ columnWrapperEl.addEventListener('click', (e) => {
     document.querySelector('.column-add-btn').classList.remove('active');
     deleteNode('#focused');
   }
+
+  if (e.target.className === 'card-remove-btn') {
+    const cardNode = getTargetParentByClassName(e.target, 'card-wrapper');
+    setStateProperty('focusedCardID', cardNode.id);
+    modalWrapperEl.classList.add('active');
+  }
 });
+const getTargetParentByClassName = (node, className) => {
+  if (node) {
+    let current = node;
+    while (current !== document.body) {
+      if (current.className === className) return current;
+      current = current.parentNode;
+    }
+    return false;
+  }
+};
 
 function deleteNode(query) {
   document.querySelector(`${query}`).remove();
