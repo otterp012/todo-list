@@ -1,33 +1,5 @@
-const store = {
-  focusedCardID: null,
-  newInputCard: {
-    cardID: null,
-    tittle: null,
-    text: null,
-  },
-  nextCardID: 'A',
-};
-
-Object.defineProperty(store, 'newInputCard', {
-  get() {
-    return this._newInputCard;
-  },
-
-  set(obj) {
-    this._newInputCard = obj;
-    this.nextCardID = this._newInputCard.cardID + 1;
-    // 여기다가 db로 보내는 로직 작성하면 될 듯
-  },
-});
-
-const setStateProperty = (property, state) => {
-  store[property] = state;
-};
-
-const getState = (property) => {
-  return store[property];
-};
-
+import { newCardWrapper, cardWrapper } from './component/card';
+import { store, setStateProperty, getState } from './store/store';
 const cardRemoveBtnEl = document.querySelector('.card-remove-btn');
 const modalWrapperEl = document.querySelector('.modal-wrapper');
 
@@ -43,32 +15,6 @@ modalRemoveBtnEl.addEventListener('click', () => {
   modalWrapperEl.classList.remove('active');
   setStateProperty('focusedCardID', null);
 });
-
-const newCardWrapper = (id) => {
-  return `<div class="new-card-wrapper" id="${id}">
-  <input type="text" class="card-tittle-input" placeholder="제목을 입력하세요">
-  <input type="text" class="card-text-input" placeholder="내용을 입력하세요">
-  <div class="card-btn-wrapper">
-    <button class="card-cancel-btn">취소</button>
-    <button class="card-add-btn">등록</button>
-  </div>
-</div>`;
-};
-
-const cardWrapper = ({ cardID, tittle, text }) => {
-  return `<div class="card-wrapper" id="${cardID}">
-  <div class="card-header-wrapper">
-    <h3 class="card-tittle">${tittle}</h3>
-    <button class="card-remove-btn"></button>
-  </div>
-  <div class="card-text-wrapper">
-    <p class="card-text">${text}</p>
-  </div>
-  <div class="card-footer-wrapper">
-    <p class="card-footer-text">otter</p>
-  </div>
-</div>`;
-};
 
 const columnWrapperEl = document.querySelector('.column-wrapper');
 columnWrapperEl.addEventListener('click', (e) => {
