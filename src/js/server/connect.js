@@ -1,5 +1,8 @@
+// 이 스크립트는 그냥 참고용으로 넣어놨어요~
+
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const { url } = require("./url.js");
+const url =
+  "mongodb+srv://second_user:12345678a@sample0.fawpm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 // 1번째 방법
 // const client = new MongoClient(url, {
 //   useNewUrlParser: true,

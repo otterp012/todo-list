@@ -11,20 +11,15 @@ async function run() {
     const db = client.db(dbName);
     const col = db.collection("todo_item");
 
-    // 카드 입력
-    const card = {
-      focusedCardID: null,
-      newInputCard: {
-        tittle: "3",
-        text: "3",
-      },
-    };
-    const insertCard = await col.insertOne(card);
-    // const theCard = await col.findOne();
+    // 이하 두 줄이 데이터 삭제방법! 쿼리날려서 삭제하시면 됩니다!
+    const query = { deletedCard: 1 };
+    const result = await col.deleteOne(query);
 
-    // console.log(card); // 입력된 카드 내용
-    // console.log(card._id); // 카드 ObjectId
-    // console.log(col);
+    if (result.deletedCount === 1) {
+      console.log("Successfully deleted one document.");
+    } else {
+      console.log("No documents matched the query. Deleted 0 documents.");
+    }
   } catch (err) {
     console.log(err.stack);
   } finally {
