@@ -1,10 +1,6 @@
 import { newCardWrapper, cardWrapper } from './component/card';
 import { store, setStateProperty, getState } from './store/store';
-import {
-  getTargetParentByClassName,
-  deleteNode,
-  getTargetChild,
-} from './utils/utils';
+import { deleteNode, getTargetChild } from './utils/utils';
 
 const modalWrapperEl = document.querySelector('.modal-wrapper');
 const modalCancelBtnEl = document.querySelector('.modal-cancel-btn');
@@ -17,6 +13,16 @@ const modalRemoveBtnEl = document.querySelector('.modal-remove-btn');
 
 modalRemoveBtnEl.addEventListener('click', () => {
   const removedCardId = getState('focusedCardID');
+  const removedData = getTargetChild(
+    document.querySelector(`#${removedCardId}`),
+    'card-text'
+  ).textContent;
+
+  document.querySelector('.log-wrapper').innerHTML += log(
+    removedData,
+    'remove'
+  );
+
   document.querySelector(`#${removedCardId}`).remove();
   modalWrapperEl.classList.remove('active');
   setStateProperty('focusedCardID', null);
@@ -34,11 +40,21 @@ const updateColumnNum = (parent, target) => {
     .map((v) => v.className)
     .filter((v) => v === target);
 };
+const addClsssName = (node, className) => {
+  node.classList.add(className);
+};
+
+const columnAddBtnClickEventHandler = (e) => {
+  if (e.target.className === 'column-add-btn') {
+    addClsssName(e.target, 'active');
+    e.currentTarget.innerHTML += newCardWrapper({ id: 'focused' });
+  }
+};
 
 columnsWrapperEl.forEach((columnWrapper) => {
   columnWrapper.addEventListener('click', (e) => {
     if (e.target.className === 'column-add-btn') {
-      e.target.classList.add('active');
+      addClsssName(e.target, 'active');
       e.currentTarget.innerHTML += newCardWrapper({ id: 'focused' });
     }
 
@@ -47,7 +63,6 @@ columnsWrapperEl.forEach((columnWrapper) => {
       const data = [...focusedCard.children]
         .filter((v) => v.tagName === 'INPUT')
         .map((v) => v.value);
-
       const cardInforObj = {
         cardID: getState('nextCardID'),
         tittle: null,
@@ -66,6 +81,13 @@ columnsWrapperEl.forEach((columnWrapper) => {
       ).length;
       getTargetChild(e.currentTarget, 'column-header-num').textContent =
         cardWrapperNum;
+
+      // add log
+      document.querySelector('.log-wrapper').innerHTML += log(
+        cardInforObj.text,
+        'add'
+      );
+      check();
     }
 
     if (e.target.className === 'card-cancel-btn') {
@@ -76,30 +98,77 @@ columnsWrapperEl.forEach((columnWrapper) => {
     }
 
     if (e.target.className === 'card-remove-btn') {
-      const cardNode = getTargetParentByClassName(e.target, 'card-wrapper');
+      const cardNode = e.target.closest('.card-wrapper');
       setStateProperty('focusedCardID', cardNode.id);
       modalWrapperEl.classList.add('active');
     }
   });
 });
 
-document.querySelector('.card-wrapper').addEventListener('dblclick', (e) => {
-  const data = e.currentTarget.innerText
-    .trim()
-    .split('\n')
-    .filter((v) => v.length);
-  const focusedCardObj = {
-    id: 'focused',
-    tittle: null,
-    text: null,
-  };
-  const currentCardObj = {
-    id: e.currentTarget.id,
-    tittle: null,
-    text: null,
-  };
-
-  [focusedCardObj.tittle, focusedCardObj.text] = data;
-  document.querySelector('#B').parentNode.innerHTML +=
-    newCardWrapper(focusedCardObj);
+document.querySelector('.chat-menu-btn').addEventListener('click', () => {
+  document.querySelector('.log-wrapper').classList.toggle('hidden');
 });
+
+const log = (text, attrubute) => {
+  const attrubutes = {
+    add: `${text}를 새로 입력했습니다`,
+    remove: `${text}를 삭제했습니다.`,
+  };
+  return ` <div class="log-card-wrapper">
+  <div class="log-image-wrapper">🥳</div>
+  <div class="log-text-wrapper">
+    <span class="user-name">@sam</span>
+    <p class="log-text">${attrubutes[attrubute]}</p>
+    <span class="time">1분 전</span>
+  </div>
+</div>
+  `;
+};
+
+const check = () => {
+  if (document.querySelectorAll('.log-card-wrapper').length > 6) {
+    document.querySelectorAll('.log-card-wrapper')[0].remove();
+  }
+};
+
+document.querySelector('.card-wrapper').addEventListener('dblclick', (e) => {
+  const originCardWrapper = e.currentTarget;
+  const nextCardWrapper = e.currentTarget.nextSibling;
+  console.log(1);
+});
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const url =
+  'mongodb+srv://second_user:12345678a@sample0.fawpm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const client = new MongoClient(url);
+const dbName = 'todo_list';
+
+async function run() {
+  try {
+    await client.connect();
+    console.log('Connected correctly to server');
+    const db = client.db(dbName);
+    const col = db.collection('todo_item');
+
+    // 카드 입력
+    const card = {
+      focusedCardID: null,
+      newInputCard: {
+        tittle: '3',
+        text: '3',
+      },
+    };
+    const insertCard = await col.insertOne(card);
+    // const theCard = await col.findOne();
+
+    // console.log(card); // 입력된 카드 내용
+    // console.log(card._id); // 카드 ObjectId
+    // console.log(col);
+  } catch (err) {
+    console.log(err.stack);
+  } finally {
+    await client.close();
+  }
+}
+
+run().catch(console.dir);
