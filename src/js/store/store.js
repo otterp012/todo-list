@@ -1,3 +1,7 @@
+// const { MongoClient, ServerApiVersion } = require("mongodb");
+// const { url } = require("../server/url.js");
+// const client = new MongoClient(url);
+// const dbName = "todo_list";
 const store = {
   focusedCardID: null,
   newInputCard: {
@@ -5,10 +9,10 @@ const store = {
     tittle: null,
     text: null,
   },
-  nextCardID: 'A',
+  nextCardID: "A",
 };
 
-Object.defineProperty(store, 'newInputCard', {
+Object.defineProperty(store, "newInputCard", {
   get() {
     return this._newInputCard;
   },
