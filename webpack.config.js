@@ -1,6 +1,18 @@
 const path = require('path');
 
 module.exports = {
+  resolve: {
+    fallback: {
+      url: require.resolve('url'),
+      fs: false,
+      crypto: require.resolve('crypto-browserify'),
+      http: require.resolve('stream-http'),
+      https: require.resolve('https-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      stream: require.resolve('stream-browserify'),
+    },
+  },
+
   // enntry file
   entry: ['@babel/polyfill', './src/js/app.js', './src/sass/main.scss'],
   // 컴파일 + 번들링된 js 파일이 저장될 경로와 이름 지정
