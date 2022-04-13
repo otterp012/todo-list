@@ -9,8 +9,8 @@ const newCardWrapper = ({ id = '', tittle = '', text = '' }) => {
   </div>`;
 };
 
-const cardWrapper = ({ cardID, tittle, text }) => {
-  return `<div class="card-wrapper" id="${cardID}">
+const cardWrapper = ({ tittle, text }) => {
+  return `<div class="card-wrapper">
     <div class="card-header-wrapper">
       <h3 class="card-tittle">${tittle}</h3>
       <button class="card-remove-btn"></button>

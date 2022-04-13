@@ -73,10 +73,13 @@ columnsWrapperEl.forEach((columnWrapper) => {
       const newInputData = [...newCardInputEl.children]
         .filter((v) => v.tagName === 'INPUT')
         .map((v) => v.value);
+      newCardInfor.tittle = newInputData[0];
+      newCardInfor.text = newInputData[1];
       newCardInfor.columnID = e.currentTarget.id;
 
       e.currentTarget.innerHTML += cardWrapper(newCardInfor);
       deleteNode('#newCardInput');
+
       const cardWrapperNum = [...e.currentTarget.children].filter(
         (v) => v.className === 'card-wrapper'
       ).length;

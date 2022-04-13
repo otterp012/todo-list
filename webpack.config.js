@@ -1,4 +1,6 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   resolve: {
@@ -14,7 +16,7 @@ module.exports = {
       crypto: false,
       util: false,
       dns: false,
-      os: false,
+      os: require.resolve('os-browserify/browser'),
       'bson-ext': false,
       kerberos: false,
       snappy: false,
@@ -40,7 +42,15 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-class-properties'],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              new HtmlWebpackPlugin({
+                template: 'src/app.html',
+              }),
+              new webpack.ProvidePlugin({
+                process: 'process/browser',
+              }),
+            ],
           },
         },
       },
