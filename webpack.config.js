@@ -3,16 +3,26 @@ const path = require('path');
 module.exports = {
   resolve: {
     fallback: {
-      url: require.resolve('url'),
       fs: false,
-      crypto: require.resolve('crypto-browserify'),
-      http: require.resolve('stream-http'),
-      https: require.resolve('https-browserify'),
-      os: require.resolve('os-browserify/browser'),
-      stream: require.resolve('stream-browserify'),
+      tls: false,
+      net: false,
+      path: false,
+      zlib: false,
+      http: false,
+      https: false,
+      stream: false,
+      crypto: false,
+      util: false,
+      dns: false,
+      os: false,
+      'bson-ext': false,
+      kerberos: false,
+      snappy: false,
+      'snappy/package.json': false,
+      'mongodb-client-encryption': false,
+      'crypto-browserify': require.resolve('crypto-browserify'), //if you want to use this module also don't forget npm i crypto-browserify
     },
   },
-
   // enntry file
   entry: ['@babel/polyfill', './src/js/app.js', './src/sass/main.scss'],
   // 컴파일 + 번들링된 js 파일이 저장될 경로와 이름 지정
