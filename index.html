@@ -10,15 +10,42 @@
       <div class="header-wrapper">
         <h1>TO-DO LIST</h1>
         <button class="chat-menu-btn"></button>
+        <div class="log-wrapper"></div>
       </div>
     </header>
     <main>
       <div class="columns-wrapper">
-        <div class="column-wrapper">
+        <div class="column-wrapper" id="to-dos">
           <div class="column-header-wrapper">
             <div class="column-header-left-wrapper">
               <h2 class="column-header-tittle">해야할 일</h2>
-              <span class="column-header-num">2</span>
+              <span class="column-header-num">0</span>
+            </div>
+            <div class="column-header-right-wrapper">
+              <button class="column-add-btn"></button>
+              <button class="column-remove-btn"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="column-wrapper" id="to-dos-ongoing">
+          <div class="column-header-wrapper">
+            <div class="column-header-left-wrapper">
+              <h2 class="column-header-tittle">진행중인 일</h2>
+              <span class="column-header-num">0</span>
+            </div>
+            <div class="column-header-right-wrapper">
+              <button class="column-add-btn"></button>
+              <button class="column-remove-btn"></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="column-wrapper" id="to-dos-done">
+          <div class="column-header-wrapper">
+            <div class="column-header-left-wrapper">
+              <h2 class="column-header-tittle">완료된 일</h2>
+              <span class="column-header-num">1</span>
             </div>
             <div class="column-header-right-wrapper">
               <button class="column-add-btn"></button>
@@ -26,7 +53,7 @@
             </div>
           </div>
 
-          <div class="card-wrapper">
+          <div class="card-wrapper" id="B">
             <div class="card-header-wrapper">
               <h3 class="card-tittle">card tittle</h3>
               <button class="card-remove-btn"></button>
@@ -38,17 +65,6 @@
               <p class="card-footer-text">otter</p>
             </div>
           </div>
-          <!-- 작성된 card -->
-          <!-- <div class="new-card-wrapper">
-            <input type="text" class="card-tittle-input" placeholder="제목을 입력하세요">
-            <input type="text" class="card-text-input" placeholder="내용을 입력하세요">
-            <div class="card-btn-wrapper">
-              <button class="card-cancel-btn">취소</button>
-              <button class="card-add-btn">등록</button>
-            </div>
-          </div>
-        </div> -->
-          <!-- card 추가 -->
         </div>
       </div>
     </main>
@@ -63,20 +79,6 @@
       </div>
     </div>
 
-    <div class="log-wrapper">
-      <div class="log-btn-wrapper">
-        <button class="log-close-btn"></button>
-      </div>
-
-      <div class="log-card-wrapper">
-        <div class="log-image-wrapper">🥳</div>
-        <div class="log-text-wrapper">
-          <span class="user-name">@sam</span>
-          <p class="log-text">어쩌고 저쩌고를 이동했습니다.</p>
-          <span class="time">1분 전</span>
-        </div>
-      </div>
-    </div>
     <script src="dist/js/bundle.js"></script>
   </body>
 </html>

@@ -1,23 +1,21 @@
 .log-wrapper {
-  display: none;
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 320px;
-  height: 100vh;
-  background-color: red;
+  top: 40px;
+  right: 40px;
+  display: flex;
+  flex-direction: column-reverse;
+  width: 20%;
+  height: 800px;
   padding: 40px;
-
-  .log-btn-wrapper {
-    display: flex;
-    justify-content: flex-end;
+  z-index: -1;
+  &.hidden {
+    display: none;
   }
 
   .log-card-wrapper {
     display: flex;
     width: 320px;
     height: 130px;
-    background-color: blue;
 
     .log-image-wrapper {
       width: 15%;
@@ -33,7 +31,6 @@
       width: 100%;
       height: calc(100%-15px);
       padding: 15px;
-      background-color: yellow;
     }
   }
 }

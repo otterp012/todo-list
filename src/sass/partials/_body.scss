@@ -5,8 +5,7 @@ body {
 }
 
 .columns-wrapper {
-  @include flex();
-  width: calc(100% - 480px);
+  display: flex;
   padding-left: 80px;
 
   .column-wrapper {
@@ -15,6 +14,7 @@ body {
 
     .column-header-wrapper {
       @include flex($justify-content: space-between);
+      margin-left: 10px;
       height: 30px;
       .column-header-left-wrapper {
         @include flex();

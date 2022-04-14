@@ -9,8 +9,32 @@ const getTargetParentByClassName = (node, className) => {
   }
 };
 
-function deleteNode(query) {
-  document.querySelector(`${query}`).remove();
-}
+const getTargetChild = (start = document.body, target) => {
+  const queue = [start];
+  const visited = {};
+  visited[start] = true;
 
-export { getTargetParentByClassName, deleteNode };
+  while (queue.length) {
+    for (let i = 0; i < queue.length; i++) {
+      const parent = queue.shift();
+      for (const child of parent.childNodes) {
+        if (String(child.className).includes(target)) return child;
+        else {
+          visited[child] = true;
+          queue.push(child);
+        }
+      }
+    }
+  }
+  return null;
+};
+
+const deleteNode = (query) => {
+  document.querySelector(`${query}`).remove();
+};
+
+const addClsssName = (node, className) => {
+  node.classList.add(className);
+};
+
+export { getTargetParentByClassName, deleteNode, addClsssName, getTargetChild };
